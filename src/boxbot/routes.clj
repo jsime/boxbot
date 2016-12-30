@@ -1,6 +1,7 @@
 (ns boxbot.routes
   (:require [compojure.core :refer [defroutes GET POST]]
             [compojure.route :refer [not-found]]
+            [buddy.auth.accessrules :refer (success error)]
             [buddy.sign.jwt :as jwt]
             [cheshire.core :as json]
             [boxbot.config :as config]
@@ -46,3 +47,33 @@
   (POST "/register" [] register)
 
   (not-found "<h1>Page not found</h1>"))
+
+;; Authentication rule handlers
+(defn any-access
+  [request]
+  (success))
+
+(defn authenticated-access
+  [request]
+  (if (:identity request)
+    (success)
+    (error "Invalid authentication provided for protected resource")))
+
+(defn admin-access
+  [request]
+  (error "Handler admin-access not implemented"))
+
+;; Authentication requirement rules
+(def rules [{:pattern #"^/admin/.*"
+             :handler admin-access}
+            {:uris ["/" "/login" "/register"]
+             :handler any-access}
+            {:pattern #"^/.+"
+             :handler authenticated-access}])
+
+;; General unauth access handler
+(defn on-error
+  [request value]
+  {:status 403
+   :headers {"X-Reason" value}
+   :body "Not authorized"})
