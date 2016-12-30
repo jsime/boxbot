@@ -1,12 +1,11 @@
 (ns boxbot.models.boxes
-  (:require [korma.core :refer :all]
-            [boxbot.db :as db]))
+  (:require [korma.core :as k]))
 
-(defentity boxes
-  (pk :box_id)
-  (table :boxes)
-  (entity-fields :name :description))
+(k/defentity boxes
+  (k/pk :box_id)
+  (k/table :boxes)
+  (k/entity-fields :name :description))
 
 (defn all
   []
-  (select boxes))
+  (k/select boxes))
