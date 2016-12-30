@@ -19,7 +19,9 @@
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools
                                               com.sun.jmx/jmxri]]
-                 [ring-logger "0.7.6"]]
+                 [ring-logger "0.7.6"]
+                 [clj-time "0.13.0"]
+                 [trptcolin/versioneer "0.2.0"]]
   :plugins [[migratus-lein "0.4.3"]]
   :aot [boxbot.core]
   :main boxbot.core
