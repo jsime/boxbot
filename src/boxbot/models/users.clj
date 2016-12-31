@@ -15,12 +15,12 @@
       (k/values
         (assoc user :password (sc/encrypt (:password data) 16384 8 1))))))
 
-(defn single-by-email
+(defn find-by-email
   [email]
   (first (k/select users
             (k/where {:email (string/lower-case email)}))))
 
-(defn single-by-id
+(defn find-by-id
   [user-id]
   (first (k/select users
             (k/where {:user_id user-id}))))
