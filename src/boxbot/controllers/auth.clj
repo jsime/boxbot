@@ -15,7 +15,7 @@
                 :sub (:user_id user)
                 :iat issued
                 :exp expiry}]
-    (jwt/sign claims config/jws-secret {:alg :hs512})))
+    (jwt/sign claims config/jws-secret)))
 
 (defn login
   [request]
