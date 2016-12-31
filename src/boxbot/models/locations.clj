@@ -15,3 +15,12 @@
       (k/values
         (assoc loc :user_id (:user_id user))))))
 
+(defn user-locations
+  [user-id]
+  (k/select locations
+    (k/where {:user_id user-id})))
+
+(defn user-location
+  [user-id loc-id]
+  (k/select locations
+    (k/where {:user_id user-id :location_id loc-id})))

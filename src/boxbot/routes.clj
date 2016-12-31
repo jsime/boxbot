@@ -11,10 +11,19 @@
   {:status 200
    :body "<h1>Hello world!</h1>"})
 
+(defn as-int
+  [p]
+  (let [c (re-find #"\d+" p)]
+    (if c
+      (Integer. c)
+      nil)))
+
 (defroutes routes
   (GET "/" [] home)
 
   (POST "/locations/add" [] c.locations/add)
+  (GET "/locations" [] c.locations/user-locations)
+  (GET "/location/:id" [id :<< as-int :as r] (c.locations/user-location r id))
 
   (GET "/boxes" [] c.boxes/boxes)
   (GET "/box/:id" [id :as r] (c.boxes/box r id))
