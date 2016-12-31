@@ -3,6 +3,7 @@
             [compojure.route :refer [not-found]]
             [buddy.auth.accessrules :refer (success error)]
             [boxbot.controllers.boxes :as c.boxes]
+            [boxbot.controllers.locations :as c.locations]
             [boxbot.controllers.auth :as c.auth]))
 
 (defn home
@@ -12,6 +13,8 @@
 
 (defroutes routes
   (GET "/" [] home)
+
+  (POST "/locations/add" [] c.locations/add)
 
   (GET "/boxes" [] c.boxes/boxes)
   (GET "/box/:id" [id :as r] (c.boxes/box r id))
