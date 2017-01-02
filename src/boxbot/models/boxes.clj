@@ -1,11 +1,7 @@
 (ns boxbot.models.boxes
-  (:require [korma.core :as k]))
-
-(k/defentity boxes
-  (k/pk :box_id)
-  (k/table :boxes)
-  (k/entity-fields :box_id :user_id :location_id :name :description :created_at))
+  (:require [korma.core :as k]
+            [boxbot.entities :as e]))
 
 (defn all
   []
-  (k/select boxes))
+  (k/select e/boxes))
