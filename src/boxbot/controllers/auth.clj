@@ -1,8 +1,8 @@
 (ns boxbot.controllers.auth
   (:require [buddy.sign.jwt :as jwt]
-            [cheshire.core :as json]
             [boxbot.config :as config]
             [boxbot.models.users :as m.users]
+            [boxbot.views.json :as v]
             [clj-time.core :as time]
             [clojure.walk :as walk]
             [trptcolin.versioneer.core :as version]))
@@ -23,16 +23,13 @@
         user (m.users/verify-login (:email data) (:password data))]
     (if user
       (let [token (gen-token user)]
-        {:status 200
-         :body (json/encode {:token token})
-         :headers {"Content-Type" "application/json"}})
-      {:status 401
-       :body (json/encode {:error "Invalid credentials supplied."})
-       :headers {"Content-Type" "application/json"}})))
+        (v/ok {:token token}))
+      (v/bad-request {:msg "Invalid credentials"}))))
 
 (defn register
   [request]
-  (let [data (walk/keywordize-keys (:form-params request))]
-    (if (m.users/create data)
-      {:status 200 :body "Success"}
-      {:status 400 :body "Could not register account"})))
+  (let [data (walk/keywordize-keys (:form-params request))
+        user (m.users/create data)]
+    (if user
+      (v/ok {:user user})
+      (v/bad-request {:msg "Could not register account"}))))
