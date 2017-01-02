@@ -18,5 +18,6 @@
 
 (defn user-location
   [user-id loc-id]
-  (k/select e/locations
-    (k/where {:user_id user-id :location_id loc-id})))
+  (first
+    (k/select e/locations
+      (k/where {:user_id user-id :location_id loc-id}))))
