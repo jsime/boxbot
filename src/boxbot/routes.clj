@@ -25,8 +25,7 @@
   (GET "/locations" [] c.locations/user-locations)
   (GET "/location/:id" [id :<< as-int :as r] (c.locations/user-location r id))
 
-  (GET "/boxes" [] c.boxes/boxes)
-  (GET "/box/:id" [id :as r] (c.boxes/box r id))
+  (POST "/boxes/add" [] c.boxes/add)
 
   (POST "/login" [] c.auth/login)
   (POST "/register" [] c.auth/register)
