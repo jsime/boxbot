@@ -3,6 +3,7 @@
             [compojure.route :refer [not-found]]
             [buddy.auth.accessrules :refer (success error)]
             [boxbot.controllers.boxes :as c.boxes]
+            [boxbot.controllers.items :as c.items]
             [boxbot.controllers.locations :as c.locations]
             [boxbot.controllers.auth :as c.auth]))
 
@@ -26,6 +27,8 @@
   (GET "/location/:id" [id :<< as-int :as r] (c.locations/user-location r id))
 
   (POST "/boxes/add" [] c.boxes/add)
+
+  (POST "/items/add" [] c.items/add)
 
   (POST "/login" [] c.auth/login)
   (POST "/register" [] c.auth/register)

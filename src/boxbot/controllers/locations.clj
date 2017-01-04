@@ -14,7 +14,7 @@
         (let [loc (m.locations/create user data)]
           (if loc
             (v/ok {:location loc})))
-        (catch Exception e (v/bad-request {:msg "Invalid location data"})))
+        (catch Exception e (v/bad-request {:msg "Invalid location data", :err (.getMessage e)})))
       (v/forbidden {:msg "User not found"}))))
 
 (defn user-locations
